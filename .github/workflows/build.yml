@@ -1,0 +1,14 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: NNP-Platform-Components-PCOM/PCOM-CICD/.github/workflows/build-push.yml@main
+    with:
+      image-name: pcom-di-comfyui-ubuntu
+      image-version: "0.3.10-v1"
+    secrets: inherit
