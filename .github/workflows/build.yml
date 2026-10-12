@@ -1,14 +1,25 @@
-name: Build and Push Docker Image
+name: build-and-publish
 
 on:
   push:
     branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 6 * * 1"
   workflow_dispatch:
 
+permissions:
+  contents: read
+  id-token: write
+  security-events: write
+
 jobs:
-  build:
-    uses: NNP-Platform-Components-PCOM/PCOM-CICD/.github/workflows/build-push.yml@main
+  pipeline:
+    uses: NNP-Platform-Components-PCOM/PCOM-CICD/.github/workflows/container-pipeline.yml@main
+    secrets: inherit
     with:
       image-name: pcom-di-comfyui-ubuntu
       image-version: "0.3.10-v1"
-    secrets: inherit
+      platforms: linux/amd64
